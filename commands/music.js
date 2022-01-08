@@ -28,7 +28,7 @@ new cmds.Command("Play a video from YouTube", ["play", "p"], async (msg, params)
 		},
 	});
 
-	if (loggingon) {
+	if (loggingOn) {
 		player.on("error", (v) => msg.channel.send(`Audio player debug: \`${v.message}\``));
 		player.on("stateChange", (v) => msg.channel.send(`Audio player state change: \`${v.status}\``));
 		connection.on("error", (v) => msg.channel.send(`Voice connection error: \`${v.message}\``));
