@@ -29,11 +29,11 @@ new cmds.Command("Play a video from YouTube", ["play", "p"], async (msg, params)
 	});
 
 	if (loggingOn) {
-		player.on("error", (v) => msg.channel.send(`Audio player debug: \`${v.message}\``));
-		player.on("stateChange", (v) => msg.channel.send(`Audio player state change: \`${v.status}\``));
-		connection.on("error", (v) => msg.channel.send(`Voice connection error: \`${v.message}\``));
-		connection.on("stateChange", (v) =>
-			msg.channel.send(`Voice connection state change: \`${v.status}\``)
+		player.on("error", (o,n) => msg.channel.send(`Audio player debug: \`${n.message}\``));
+		player.on("stateChange", (o,n) => msg.channel.send(`Audio player state change: \`${n.status}\``));
+		connection.on("error", (o,n) => msg.channel.send(`Voice connection error: \`${n.message}\``));
+		connection.on("stateChange", (o,n) =>
+			msg.channel.send(`Voice connection state change: \`${n.status}\``)
 		);
 		loggingOn = false;
 	}
