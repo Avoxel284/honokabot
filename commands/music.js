@@ -27,10 +27,10 @@ new cmds.Command("Play a video from YouTube", ["play", "p"], async (msg, params)
 		},
 	});
 
-	player.on("error", (v) => msg.channel.send(`Audio player debug: \`${v}\``));
-	player.on("stateChange", (v) => msg.channel.send(`Audio player debug: \`${v}\``));
-	connection.on("error", (v) => msg.channel.send(`Voice connection error: \`${v}\``));
-	connection.on("stateChange", (v) => msg.channel.send(`Voice connection state change: \`${v}\``));
+	player.on("error", (v) => msg.channel.send(`Audio player debug: \`${v.message}\``));
+	player.on("stateChange", (v) => msg.channel.send(`Audio player state change: \`${v.status}\``));
+	connection.on("error", (v) => msg.channel.send(`Voice connection error: \`${v.message}\``));
+	connection.on("stateChange", (v) => msg.channel.send(`Voice connection state change: \`${v.status}\``));
 
 	player.play(resource);
 	msg.channel.send("Playing audio resource " + ytInfo.url);
