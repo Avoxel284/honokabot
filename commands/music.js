@@ -2,6 +2,7 @@ const cmds = require("../lib/commands");
 const playdl = require("play-dl");
 const discordVoice = require("@discordjs/voice");
 let connections = {};
+let loggingOn = true;
 
 new cmds.Command("Play a video from YouTube", ["play", "p"], async (msg, params) => {
 	if (!msg.member.voice?.channel) return msg.reply("Connect to a voice channel!");
@@ -27,10 +28,15 @@ new cmds.Command("Play a video from YouTube", ["play", "p"], async (msg, params)
 		},
 	});
 
-	player.on("error", (v) => msg.channel.send(`Audio player debug: \`${v.message}\``));
-	player.on("stateChange", (v) => msg.channel.send(`Audio player state change: \`${v.status}\``));
-	connection.on("error", (v) => msg.channel.send(`Voice connection error: \`${v.message}\``));
-	connection.on("stateChange", (v) => msg.channel.send(`Voice connection state change: \`${v.status}\``));
+	if (loggingon) {
+		player.on("error", (v) => msg.channel.send(`Audio player debug: \`${v.message}\``));
+		player.on("stateChange", (v) => msg.channel.send(`Audio player state change: \`${v.status}\``));
+		connection.on("error", (v) => msg.channel.send(`Voice connection error: \`${v.message}\``));
+		connection.on("stateChange", (v) =>
+			msg.channel.send(`Voice connection state change: \`${v.status}\``)
+		);
+		loggingOn = false;
+	}
 
 	player.play(resource);
 	msg.channel.send("Playing audio resource " + ytInfo.url);
