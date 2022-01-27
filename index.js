@@ -3,14 +3,19 @@
 require("dotenv").config();
 
 const discord = require("discord.js");
-const discordVoice = require("@discordjs/voice");
-const playdl = require("play-dl");
 const cmds = require("./lib/commands");
+const fs = require("fs");
+const path = require("path");
 
-require("./commands/honoka");
-require("./commands/music");
+fs.readdir(path.join(process.cwd(), "commands"), (err, files) => {
+	if (err) return console.warn(err);
 
-const _prefix = "=";
+	files.forEach((file) => {
+		require(path.join(process.cwd(), "commands", file));
+	});
+});
+
+const _prefix = "~";
 
 const client = new discord.Client({
 	intents: [
@@ -24,7 +29,7 @@ const client = new discord.Client({
 client.login(process.env.DISCORD_TOKEN);
 
 client.on("ready", () => {
-	console.log(`Client logged in as ${client.user.tag}`);
+	console.log(`Logged in as ${client.user.tag}`);
 });
 
 client.on("messageCreate", async (msg) => {
